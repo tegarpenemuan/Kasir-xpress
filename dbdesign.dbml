@@ -1,0 +1,64 @@
+Table kategori {
+  id_kategori int [pk, increment]
+  nama_kategori varchar(255) [not null]
+  created_at datetime [default: null]
+  updated_at datetime [default: null]
+  deleted_at datetime [default: null]
+}
+
+Table keranjang {
+  id_keranjang int [pk, increment]
+  username varchar(255) [not null]
+  id_produk int [ref: > produk.id_produk]
+  jumlah int [not null]
+  harga float [not null]
+  total float [not null]
+  created_at datetime [default: null]
+  updated_at datetime [default: null]
+}
+
+Table produk {
+  id_produk int [pk, increment]
+  id_kategori int [ref: > kategori.id_kategori]
+  nama_produk varchar(255) [not null]
+  gambar_produk varchar(255) [not null]
+  harga float [not null]
+  created_at datetime [default: null]
+  updated_at datetime [default: null]
+  deleted_at datetime [default: null]
+}
+
+Table transaksi {
+  id_transaksi int [pk, increment]
+  no_transaksi varchar(12) [not null, unique]
+  username varchar(255) [not null]
+  nama_pelanggan varchar(255) [not null]
+  no_meja int [not null]
+  catatan text [not null]
+  created_at datetime [default: null]
+  updated_at datetime [default: null]
+}
+
+Table transaksi_detail {
+  id_transaksi_detail int [pk, increment]
+  id_transaksi int [ref: > transaksi.id_transaksi]
+  id_produk int [ref: > produk.id_produk]
+  jumlah int [not null]
+  harga float [not null]
+  total float [not null]
+  created_at datetime [default: null]
+  updated_at datetime [default: null]
+}
+
+Table users {
+  username varchar(255) [pk]
+  password varchar(255) [not null]
+  nama varchar(255) [not null]
+  level enum('admin','kasir','owner') [not null, default: 'kasir']
+  is_aktif enum('1','0') [not null, default: '1']
+  access_token varchar(255) [null]
+  refresh_token varchar(255) [null]
+  created_at datetime [default: null]
+  updated_at datetime [default: null]
+}
+
